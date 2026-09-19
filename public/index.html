@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>diskuss — AI討論</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>diskuss</h1>
+    <p>2つのAIが討論し、オブザーバーAIが勝者と結論を示します</p>
+  </header>
+
+  <main>
+    <form id="setup" class="card">
+      <label class="field">
+        <span class="field-label">議論テーマ</span>
+        <textarea id="topic" rows="3" required placeholder="例: リモートワークはオフィス勤務より生産性が高いか？"></textarea>
+      </label>
+
+      <div class="debaters">
+        <fieldset class="debater ai1">
+          <legend id="legend1">AI1</legend>
+          <label class="field">
+            <span class="field-label">モデル</span>
+            <select id="model1" required></select>
+          </label>
+          <label class="field">
+            <span class="field-label">立場 <small>(空欄ならオブザーバーが設定)</small></span>
+            <input id="stance1" type="text" maxlength="500" placeholder="自動">
+          </label>
+        </fieldset>
+        <fieldset class="debater ai2">
+          <legend id="legend2">AI2</legend>
+          <label class="field">
+            <span class="field-label">モデル</span>
+            <select id="model2" required></select>
+          </label>
+          <label class="field">
+            <span class="field-label">立場 <small>(空欄ならオブザーバーが設定)</small></span>
+            <input id="stance2" type="text" maxlength="500" placeholder="自動">
+          </label>
+        </fieldset>
+      </div>
+
+      <div class="form-footer">
+        <label class="field inline">
+          <span class="field-label">最大ラウンド数</span>
+          <input id="maxRounds" type="number" min="2" max="10" value="5">
+        </label>
+        <span class="observer-info">オブザーバー: <strong id="observerName">—</strong></span>
+        <button id="startBtn" type="submit" class="primary">討論を開始</button>
+      </div>
+      <p id="formError" class="error" hidden></p>
+    </form>
+
+    <section id="arena" hidden>
+      <div class="card topic-card">
+        <div class="topic-label">議論テーマ</div>
+        <div id="arenaTopic" class="topic-text"></div>
+        <div id="stances" class="stances" hidden>
+          <div class="stance ai1"><span class="badge" id="badge1">AI1</span><span class="model" id="modelName1"></span><p id="stanceText1"></p></div>
+          <div class="stance ai2"><span class="badge" id="badge2">AI2</span><span class="model" id="modelName2"></span><p id="stanceText2"></p></div>
+        </div>
+      </div>
+
+      <div id="timeline" class="timeline"></div>
+
+      <div id="status" class="status" hidden><span class="spinner"></span><span id="statusText"></span></div>
+
+      <div class="arena-actions">
+        <button id="cancelBtn" type="button">中断</button>
+        <button id="newBtn" type="button" class="primary" hidden>新しい討論を始める</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js" type="module"></script>
+</body>
+</html>
